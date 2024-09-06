@@ -43,7 +43,7 @@ void setup() {
     pinMode(ECHO_PIN, INPUT);
 
     // Create the BLE Device
-    BLEDevice::init("Ultrasonic");
+    BLEDevice::init("Anitta Reservatorio");
 
     // Create the BLE Server
     pServer = BLEDevice::createServer();
@@ -82,23 +82,20 @@ void setup() {
     BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
     pAdvertising->addServiceUUID(SERVICE_UUID);
     pAdvertising->setScanResponse(false);
-    pAdvertising->setMinPreferred(0x0);  // set value to 0x00 to not advertise this parameter
+    pAdvertising->setMinPreferred(0x0);
     BLEDevice::startAdvertising();
     Serial.println("Waiting for a client connection to notify...");
 }
 
 float readUltrasonicDistance() {
-    // Send a 10us pulse to TRIG_PIN
     digitalWrite(TRIG_PIN, LOW);
     delayMicroseconds(2);
     digitalWrite(TRIG_PIN, HIGH);
     delayMicroseconds(10);
     digitalWrite(TRIG_PIN, LOW);
 
-    // Measure the pulse duration on ECHO_PIN
     long duration = pulseIn(ECHO_PIN, HIGH);
 
-    // Calculate the distance in centimeters
     float distance = (duration * 0.0343) / 2;
     return distance;
 }
@@ -112,7 +109,7 @@ void loop() {
         String distanceStr = String(distance, 2); // Convert distance to a string with 2 decimal places
         pCharacteristic_2->setValue(distanceStr.c_str()); // Send the value as a string
         pCharacteristic_2->notify(); // Notify the connected device
-        Serial.printf("Distance: %.2f cm\n", distance);
+        Serial.printf("%.2f", distance);
         delay(1000);  // Adjust delay as needed
     }
 
