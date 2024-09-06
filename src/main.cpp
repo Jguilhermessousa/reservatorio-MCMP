@@ -43,7 +43,7 @@ void setup() {
     pinMode(ECHO_PIN, INPUT);
 
     // Create the BLE Device
-    BLEDevice::init("Anitta Reservatorio");
+    BLEDevice::init("Reservatorio");
 
     // Create the BLE Server
     pServer = BLEDevice::createServer();
